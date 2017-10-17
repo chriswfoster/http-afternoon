@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-//import axios
+
 import axios from 'axios'
 
 class NewUser extends Component{
@@ -13,13 +13,30 @@ class NewUser extends Component{
         }
     }
     
-    // insert addUser
+    addUser(){
+        axios.post('/api/users', this.state).then(res=>{
+            console.log(res)
+            let user = res.data
+            this.props.history.push(`/user/${user.id}`)
+        })
+    }
+  
+    updateUser(){
+        let id = this.props.match.params.id        
+        axios.put(`/api/user/${id}`, this.state).then(res=>{
+            console.log(res)
+            let user = res.data
+            this.props.history.push(`/user/${user.id}`)
+        })
+    }
 
 
-    // insert updateUser    
-
-
-    // insert deleteUser
+    deleteUser(){
+        let id = this.props.match.params.id
+        axios.delete(`api/user/${id}`).then(res=>{
+            this.props.history.push(`/search`)
+        })
+    }
 
 
     render(){
